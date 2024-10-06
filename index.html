@@ -5,7 +5,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
+  <!-- external styles -->
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" rel="stylesheet"> 
+  <script src="https://js.arcgis.com/4.30/"></script>
+
+  <!-- internal styles here -->
   <style>
+
    html,
    body,
    #viewDiv {
@@ -15,6 +22,7 @@
     width: 100%;
    }
 
+   
    .addRecordBtn {
      position: absolute;
      z-index: 10;
@@ -33,10 +41,12 @@
    .addRecordBtn:hover {
    background-color: #005a87;
    }
-  </style>
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" rel="stylesheet"> 
-  <script src="https://js.arcgis.com/4.30/"></script>
+    </style>
+
+
+ 
+
 
   <script> 
    require([ 
@@ -58,11 +68,12 @@
        basemap: "hybrid"
      });
 
+     //Create a basemap or background map
      const view = new MapView({
        container: "viewDiv", // Reference to the DOM node that will contain the view
        map: map, // References the map object
-       center: [-104.995150, 39.731364], 
-       zoom: 8 });
+       center: [-104.995150, 39.731364], //Provide lat, long coordinate of the center of basemap
+       zoom: 8 }); //set scale of basemap upon opening
 
      // Search Bar 
      const search = new Search({ view: view }); 
@@ -74,7 +85,7 @@
        
      // create a feature layer from a feature service
      const EventLayer = new FeatureLayer({ 
-         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_47e899552d24448a9db74735d97df78b_results/FeatureServer", 
+         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_5b85a6bc6ccf4c328d28db6be8d6af71_results/FeatureServer", 
      });
      
      //adding event layer to map
@@ -111,7 +122,7 @@
             // popupTemplate: popupAirport }); 
             // map.add(AirportLayer);
 
-    // Define a pop-up for the AirportLayer 
+    // Define a pop-up for the SpringLayer 
     const popupSpring = { 
             title: "Spring", 
             content: "<b>Name:</b> {Name}<br>" };
@@ -157,6 +168,7 @@
         // ]
       });
 
+      //creates a collapse basemap gallery button
       const basemapGalleryExpand = new Expand({
         view: view,
         content: basemapGallery,
@@ -174,8 +186,15 @@
  </head>
  <body>
     <h1>Hot Springs Map </h1>
-  <h1>Hello World! I am ready to collect data. </h1>
+  <h1>What is the temperature? </h1>
   <a href="https://survey123.arcgis.com/share/55a1dcb95cfe435a8b16cebfd83afef4"target="_blank" class="addRecordBtn">Add Record</a>
   <div id="viewDiv"></div>
+
+  <!-- <script>viewDiv = document.getElementById("viewDiv");
+            mydiv.addEventListener("click", function(){
+                alert("Hello World!");
+            });
+        </script>  //couldn't get to work because the style section wouldn't accept a #mydiv background along with the "add record" button. -->
+    <script type="text/javascript" src="js/main.js"></script>
  </body>
 </html>
