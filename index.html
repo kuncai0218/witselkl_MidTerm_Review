@@ -1,44 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-            <title></title>
+ <head>
+  <title>Hot Springs Status</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-        <!--put your external stylesheet links here-->
-        <link rel="stylesheet" href="css/style.css">
-        <!--[if IE<9]>
-            <link rel="stylesheet" href="css/style.ie.css">
-        <![endif]-->
+  <style>
+   html,
+   body,
+   #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+   }
 
-         <!--you can also place internal styles here;
-             place these within <style> tags-->
-                <style>
-                    #mydiv {
-                        background-color: red;
-                        width: 80%;
-                        margin: 0 auto;
-                        height: 100px;
-                    }
-                </style>   
-    </head>
-    <div id="mydiv">
-        Hello World!
-    </div>
+   .addRecordBtn {
+     position: absolute;
+     z-index: 10;
+     top: 10px;
+     right: 10px;
+     background-color: #0079c1;
+     color: white;
+     padding: 8px 16px;
+     border: none;
+     border-radius: 4px;
+     font-size: 14px;
+     cursor: pointer;
+     text-decoration: none;
+   }
+
+   .addRecordBtn:hover {
+   background-color: #005a87;
+   }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" rel="stylesheet"> 
+  <script src="https://js.arcgis.com/4.30/"></script>
+
+  <script> 
+   require([ 
+        "esri/config", 
+        "esri/Map", 
+        "esri/views/MapView", 
+        "esri/Graphic", 
+        "esri/layers/GraphicsLayer", 
+        "esri/layers/FeatureLayer", 
+        "esri/widgets/BasemapGallery", 
+        "esri/widgets/Expand", 
+        "esri/widgets/Locate", 
+        "esri/widgets/Search"
+
+   ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, BasemapGallery, Expand, Locate, Search)  {
     
-    <script>
-        var mydiv = document.getElementById("mydiv");
-        mydiv.addEventListener("click", function(){
-            alert("Hello World!");
-        });
-    </script>
-    <body>
-        <!--put your initial page content here-->
-        "Hello World"
-        <!--you can also use this space for internal scripts;
-        place these within <script> tags-->
+     esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurLnZ1SKuVjcmhuYy7ZgFo7nRkeaex5Pyse90hA3_-twQ9aZh3ukW7y7j9oxVbinOUkZTkuP5jIlAEtH5e_7DHP0liWf6tn6QTxetcFnI3rIi0xPzkoaEPekxL0-rDUwsAdMQRuux-0uuNMTE7e_lNeG45pvgeuCSr5abahKFzvuUJ-ewQsq9pGAJYlLcwozKzYElZv8h7OlHzgxN1NcRAiWme1AEaa5tzqVZug9kV8C5AT1_64sbOrZQ"; 
+     const map = new Map({
+       basemap: "hybrid"
+     });
 
-        <!--put your external script links here-->
-        <script type="text/javascript" src="js/main.js"></script>
-    </body>
+     const view = new MapView({
+       container: "viewDiv", // Reference to the DOM node that will contain the view
+       map: map, // References the map object
+       center: [-104.995150, 39.731364], 
+       zoom: 8 });
+
+     // Search Bar 
+     const search = new Search({ view: view }); 
+       view.ui.add(search, "top-left");
+
+       // Locate Button 
+     const locateBtn = new Locate({ view: view }); 
+       view.ui.add(locateBtn, "top-right");
+       
+     // create a feature layer from a feature service
+     const EventLayer = new FeatureLayer({ 
+         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_47e899552d24448a9db74735d97df78b_results/FeatureServer", 
+     });
+     
+     //adding event layer to map
+     map.add(EventLayer);
+
+    // Define a pop-up for SchoolLayer 
+    // const popupSchool = { 
+    //         title: "School", 
+    //         content: "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br> <b>Population:</b> {POPULATION}<br>", }; 
+
+    // // Adding the School feature layer 
+    // const SchoolLayer = new FeatureLayer({ 
+    //         url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer", 
+    //         outFields: ["NAME", "CITY", "POPULATION"], 
+    //         popupTemplate: popupSchool }); 
+    //         map.add(SchoolLayer);  
+
+    // // Define a pop-up for the AirportLayer 
+    // const popupAirport = { 
+    //         title: "Airport", 
+    //         content: "<b>Name:</b> {Fac_Name}<br>" };
+
+    // Setting up the icon for Airports 
+    //const airportRenderer = { 
+            // type: "simple", 
+            // symbol: { type: "picture-marker", 
+            // url: "local_airport_24dp_5F6368.png", 
+            // width: "10px", height: "10px" } }; 
+            
+    //const AirportLayer = new FeatureLayer({ 
+            // url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer", 
+            // renderer: airportRenderer, 
+            // outFields: ["Fac_Name"], 
+            // popupTemplate: popupAirport }); 
+            // map.add(AirportLayer);
+            
+    // Setting up the icon for Springs 
+    const SpringRenderer = { 
+            type: "simple", 
+            symbol: { type: "picture-marker", 
+            url: "hot_tub_24dp_5F6368.png", 
+            width: "10px", height: "10px" } }; 
+
+    // Setting up New Mexico Spring data
+    const NMSpringLayer = new FeatureLayer({ 
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/New_Mexico_Hot_Springs_Map_gdb/FeatureServer", 
+            renderer: SpringRenderer, 
+            outFields: ["Fac_Name"], 
+            popupTemplate: popupAirport }); 
+            map.add(NMSpringLayer);       
+            
+    // Basemap Gallery
+    const basemapGallery = new BasemapGallery({
+        view: view,
+        // source: [
+        //   Basemap.fromId("streets"),
+        //   Basemap.fromId("satellite"),
+        //   Basemap.fromId("hybrid"),
+        //   Basemap.fromId("topo"),
+        //   Basemap.fromId("gray"),
+        //   Basemap.fromId("dark-gray"),
+        //   Basemap.fromId("oceans"),
+        //   Basemap.fromId("national-geographic"),
+        //   Basemap.fromId("terrain"),
+        //   Basemap.fromId("osm")
+        // ]
+      });
+
+      const basemapGalleryExpand = new Expand({
+        view: view,
+        content: basemapGallery,
+        expandIconClass: "esri-icon-basemap" // Optional, defaults to "esri-icon-expand"
+      });
+
+      view.ui.add(basemapGalleryExpand, "top-right");             
+
+   }); 
+ 
+ 
+ </script>
+ 
+
+ </head>
+ <body>
+    <h1>Hot Springs Map </h1>
+  <h1>Hello World! I am ready to collect data. </h1>
+  <a href="https://survey123.arcgis.com/share/55a1dcb95cfe435a8b16cebfd83afef4"target="_blank" class="addRecordBtn">Add Record</a>
+  <div id="viewDiv"></div>
+ </body>
 </html>
