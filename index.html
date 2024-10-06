@@ -110,21 +110,35 @@
             // outFields: ["Fac_Name"], 
             // popupTemplate: popupAirport }); 
             // map.add(AirportLayer);
+
+    // Define a pop-up for the AirportLayer 
+    const popupSpring = { 
+            title: "Spring", 
+            content: "<b>Name:</b> {Name}<br>" };
             
     // Setting up the icon for Springs 
     const SpringRenderer = { 
             type: "simple", 
             symbol: { type: "picture-marker", 
-            url: "hot_tub_24dp_5F6368.png", 
-            width: "10px", height: "10px" } }; 
+            url: "hot_tub_24dp_0000F5.png", 
+            width: "18px", height: "18px" } }; 
 
     // Setting up New Mexico Spring data
     const NMSpringLayer = new FeatureLayer({ 
             url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/New_Mexico_Hot_Springs_Map_gdb/FeatureServer", 
-            renderer: SpringRenderer, 
-            outFields: ["Fac_Name"], 
-            popupTemplate: popupAirport }); 
-            map.add(NMSpringLayer);       
+            renderer: SpringRenderer,
+            outFields: ["Name"], 
+            popupTemplate: popupSpring });   
+            map.add(NMSpringLayer);   
+            
+     // Setting up Colorado Spring data
+    const COSpringLayer = new FeatureLayer({ 
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Colorado_Hot_Springs_Map_gdb/FeatureServer", 
+            renderer: SpringRenderer,
+            outFields: ["Name"], 
+            popupTemplate: popupSpring });   
+            map.add(COSpringLayer);       
+                    
             
     // Basemap Gallery
     const basemapGallery = new BasemapGallery({
