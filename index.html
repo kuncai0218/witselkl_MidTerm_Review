@@ -133,92 +133,74 @@
                 width: "18px", height: "18px" } }; 
 
         // Setting up New Mexico Spring data
-        const NMSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/New_Mexico_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(NMSpringLayer);   
-                
-        // Setting up Colorado Spring data
-        const COSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Colorado_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(COSpringLayer);       
-                        
-        // Setting up Montana Spring data
-        const MOSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Montana_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(MOSpringLayer);
-                
-      // Setting up Wyoming Spring data
-      const WYSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Wyoming_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(WYSpringLayer);         
+        const stateConfigs = {
+        // New Mexico configuration
+        NM: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/New_Mexico_Hot_Springs_Map_gdb/FeatureServer",
+            name: "New Mexico"
+        },
+        // Colorado configuration
+        CO: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Colorado_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Colorado"
+        },
+        // Montana configuration
+        MT: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Montana_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Montana"
+        },
+        // Wyoming configuration
+        WY: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Wyoming_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Wyoming"
+        },
+        // Washington configuration
+        WA: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Washington_State_Hot_Spring/FeatureServer",
+            name: "Washington"
+        },
+        // Oregon configuration
+        OR: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Oregon_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Oregon"
+        },
+        // California configuration
+        CA: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/California_Hot_Springs_Map_gdb/FeatureServer",
+            name: "California"
+        },
+        // Idaho configuration
+        ID: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Idaho_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Idaho"
+        },
+        // Utah configuration
+        UT: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Utah_Hot_Springs_Map_gdb/FeatureServer",
+            name: "Utah"
+        },
+        // Arizona configuration
+        AZ: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Arizona_Map_gdb/FeatureServer",
+            name: "Arizona"
+        },
+        // Nevada configuration
+        NV: {
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Nevada_Map_gdb/FeatureServer",
+            name: "Nevada"
+        }
+    };
 
-    // Setting up Washington Spring data
-    const WASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Washington_State_Hot_Spring/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(WASpringLayer);
-
-    // Setting up Oregon Spring data
-    const ORSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Oregon_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(ORSpringLayer);
-
-    // Setting up California Spring data
-    const CASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/California_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(CASpringLayer); 
-                
-    // Setting up Idaho Spring data
-    const IASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Idaho_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(IASpringLayer); 
-                
-    // Setting up Utah Spring data
-    const UTSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Utah_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(UTSpringLayer); 
-                
-    // Setting up Arizona Spring data
-    const AZSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Arizona_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(AZSpringLayer); 
-                
-    // Setting up Nevada Spring data
-    const NVSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Nevada_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(NVSpringLayer);             
+    // Create all layers using the configuration
+    Object.entries(stateConfigs).forEach(([stateCode, config]) => {
+        const layer = new FeatureLayer({
+            url: config.url,
+            renderer: SpringRenderer,
+            outFields: ["Name"],
+            popupTemplate: popupSpring
+        });
+        map.add(layer);
+    });        
 
 
 
